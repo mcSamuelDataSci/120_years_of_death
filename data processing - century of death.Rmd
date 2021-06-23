@@ -25,6 +25,8 @@ y2000 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2000") %>% mutate(year=2
 y2010 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2010") %>% mutate(year=2010)
 y2018 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2018") %>% mutate(year=2018)
 
+
+
 workDat0 <- bind_rows(y1900, y1910, y1920, y1950, y1960, y1970, y1990, y2000, y2010, y2018)
 ```
 
