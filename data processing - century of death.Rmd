@@ -88,3 +88,14 @@ workGroup1b %>% gt()  %>%
 
 ```
 
+
+
+
+
+```{r}
+library(gitcreds)
+gitcreds_set()
+
+
+```
+
