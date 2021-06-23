@@ -1,0 +1,88 @@
+---
+title: "Data Cleaning/Checking"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message= FALSE, warning = FALSE)
+```
+
+```{r}
+library(readxl)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(gt)
+
+y1900 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1900") %>% mutate(year=1900)
+y1910 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1910") %>% mutate(year=1910)
+y1920 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1920") %>% mutate(year=1920)
+y1950 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1950") %>% mutate(year=1950)
+y1960 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1960") %>% mutate(year=1960)
+y1970 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1970") %>% mutate(year=1970)
+y1990 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1990") %>% mutate(year=1990)
+y2000 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2000") %>% mutate(year=2000)
+y2010 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2010") %>% mutate(year=2010)
+y2018 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2018") %>% mutate(year=2018)
+
+workDat0 <- bind_rows(y1900, y1910, y1920, y1950, y1960, y1970, y1990, y2000, y2010, y2018)
+```
+
+
+```{r fig.height= 3}
+workGroup1a <- workDat0 %>% 
+               group_by(year, OurGroup3, OurGroup0)     %>% 
+               summarise(deaths=sum(Number))                          
+
+workGroup1b <- workGroup1a  %>%
+               pivot_wider(names_from = year, values_from = deaths)  
+
+library(forcats)
+
+ggplot(workGroup1a, aes(x=fct_rev(OurGroup0), y=deaths, fill = OurGroup3)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "data checks",
+       y = "number of deaths") +
+  facet_wrap(vars(year),nrow=1,scales = "free_x")
+
+```
+
+
+<br>
+<hr>
+
+
+```{r}
+
+workGroup3 <- workDat0 %>% group_by(year, OurGroup3)  %>% 
+               summarise(deaths=sum(Number)) 
+
+ggplot(workGroup3, aes(x=year, y=deaths, color=OurGroup3)) +
+  geom_line(size=2) 
+```
+
+<br>
+<hr>
+
+```{r}
+
+#yNformat <- fmt_number(columns = 4:13, use_seps = TRUE, decimals = 0) 
+
+workGroup1b %>% gt()  %>%
+  tab_options(table.font.size = 9) %>%
+  tab_style(
+    style = list(cell_fill(color = "lightcyan"),
+                 cell_text(weight = "bold")  ),
+    locations =  cells_row_groups()    ) %>%
+    fmt_number(columns = 4:12, use_seps = TRUE, decimals = 0) %>%
+  summary_rows(columns= 4:12, fns = list(sum = ~sum(.,na.rm = TRUE)), formatter = fmt_number)
+  
+
+
+# https://stackoverflow.com/questions/66018397/how-to-specify-a-custom-formatter-function-gt-table-grand-summary
+
+
+
+```
+
