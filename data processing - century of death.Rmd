@@ -1,5 +1,5 @@
 ---
-title: "Data Cleaning/Checking"
+title: "Century of Death"
 output: html_document
 ---
 
