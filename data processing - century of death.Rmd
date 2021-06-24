@@ -16,6 +16,7 @@ library(gt)
 
 y1900 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1900") %>% mutate(year=1900)
 y1910 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1910") %>% mutate(year=1910)
+y1917 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1917") %>% mutate(year=1917)
 y1918 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1918") %>% mutate(year=1918)
 y1920 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1920") %>% mutate(year=1920)
 y1950 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1950") %>% mutate(year=1950)
@@ -28,7 +29,7 @@ y2018 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2018") %>% mutate(year=2
 
 
 
-workDat0 <- bind_rows(y1900, y1910, y1918, y1920, y1950, y1960, y1970, y1990, y2000, y2010, y2018)
+workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1950, y1960, y1970, y1990, y2000, y2010, y2018)
 ```
 
 
@@ -46,7 +47,7 @@ ggplot(workGroup1a, aes(x=fct_rev(OurGroup0), y=deaths, fill = OurGroup3)) +
   geom_col() +
   coord_flip() +
   labs(title = "data checks",
-       y = "number of deaths") +
+       y = "Number of Deaths", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1,scales = "free_x")
 
 ```
