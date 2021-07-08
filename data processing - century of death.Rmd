@@ -33,18 +33,32 @@ y2018 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2018") %>% mutate(year=2
 
 
 workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1929, y1939, y1940, y1950, y1960, y1970, y1990, y2000, y2010, y2018)
+
+
+
+# Deaths and Population sheet
+popDat <- read_excel("CA 1900-2020 Project.xlsx",sheet="Deaths and Popu.") %>%
+  rename(year = 1, nDeaths = 2, population = 3, cDeathRate = 4) %>%
+  select(-5)
+
+
 ```
 
 
 ```{r fig.height= 3}
 workGroup1a <- workDat0 %>% 
                group_by(year, OurGroup3, OurGroup0)     %>% 
-               summarise(deaths=sum(Number))                          
+               summarise(deaths=sum(Number)) %>%
+  left_join(select(popDat, year, population), by = "year") %>%
+  mutate(cDeathRate = 100000*deaths/population)
 
 workGroup1b <- workGroup1a  %>%
+  select(-population, -cDeathRate) %>%
                pivot_wider(names_from = year, values_from = deaths)  
 
 library(forcats)
+
+# Number of Deaths Plot
 
 ggplot(workGroup1a, aes(x=fct_rev(OurGroup0), y=deaths, fill = OurGroup3)) +
   theme(axis.text.x = element_text(size=7, angle=90, hjust=1)) +
@@ -53,6 +67,18 @@ ggplot(workGroup1a, aes(x=fct_rev(OurGroup0), y=deaths, fill = OurGroup3)) +
   labs(title = "data checks",
        y = "Number of Deaths", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1,scales = "free_x")
+
+
+# Crude Death Rate Plot
+
+ggplot(workGroup1a, aes(x=fct_rev(OurGroup0), y=cDeathRate, fill = OurGroup3)) +
+  theme(axis.text.x = element_text(size=7, angle=90, hjust=1)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "data checks",
+       y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
+  facet_wrap(vars(year),nrow=1,scales = "free_x")
+
 
 ```
 
@@ -64,10 +90,21 @@ ggplot(workGroup1a, aes(x=fct_rev(OurGroup0), y=deaths, fill = OurGroup3)) +
 ```{r}
 
 workGroup3 <- workDat0 %>% group_by(year, OurGroup3)  %>% 
-               summarise(deaths=sum(Number)) 
+               summarise(deaths=sum(Number)) %>%
+  left_join(select(popDat, year, population), by = "year") %>%
+  mutate(cDeathRate = 100000*deaths/population)
 
+
+# Number of Deaths Plot
 ggplot(workGroup3, aes(x=year, y=deaths, color=OurGroup3)) +
   geom_line(size=2) 
+
+# Crude Death Rate Plot
+
+ggplot(workGroup3, aes(x=year, y=cDeathRate, color=OurGroup3)) +
+  geom_line(size=2) 
+
+
 ```
 
 <br>
