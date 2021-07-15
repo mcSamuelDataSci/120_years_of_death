@@ -63,41 +63,45 @@ library(forcats)
 # Number of Deaths Plot (specificLevel)
 
 ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, angle=90, hjust=1)) +
+  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
   geom_col() +
   coord_flip() +
   labs(title = "Number of Deaths as Sorted by specificLevel",
        y = "Number of Deaths", x = "Cause of Death") +
-  facet_wrap(vars(year),nrow=1,scales = "free_x")
+  facet_wrap(vars(year),nrow=1,scales = "free_x") +
+theme(plot.title = element_text(hjust = 0.5))
 
 # Number of Deaths Plot (troubleshooting)
 
 ggplot(workGroup1a, aes(x=fct_rev(troubleshooting), y=deaths, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, angle=90, hjust=1)) +
+  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
   geom_col() +
   coord_flip() +
   labs(title = "Troubleshooting Deaths (Alternative to specificLevel)",
        y = "Number of Deaths", x = "Cause of Death") +
-  facet_wrap(vars(year),nrow=1,scales = "free_x")
+  facet_wrap(vars(year),nrow=1,scales = "free_x") +
+theme(plot.title = element_text(hjust = 0.5))
 
 # Crude Death Rates (specificLevel)
 
 ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=cDeathRate, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, angle=90, hjust=1)) +
+  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
   geom_col() +
   coord_flip() +
   labs(title = "Crude Death Rates (specificLevel)",
        y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
-  facet_wrap(vars(year),nrow=1)
+  facet_wrap(vars(year),nrow=1) +
+  theme(plot.title = element_text(hjust = 0.5))
 
 # Crude Death Rates (topLevel)
 
 ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, hjust=1)) +
-  geom_col(width = 5) +
+  theme(axis.text.x = element_text(size=7, hjust=0.5)) +
+  geom_col(width = 0.9) +
   #coord_flip() +
   labs(title = "Crude Death Rates (topLevel)",
-       y = "Crude Death Rate per 100k Pop", x = "Cause of Death")
+       y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
+  theme(plot.title = element_text(hjust = 0.5))
 
 
 ```
