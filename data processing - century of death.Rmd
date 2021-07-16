@@ -13,6 +13,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(gt)
+library(forcats)
 
 y1900 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1900") %>% mutate(year=1900)
 y1910 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1910") %>% mutate(year=1910)
@@ -41,11 +42,24 @@ popDat <- read_excel("CA 1900-2020 Project.xlsx",sheet="Deaths and Popu.") %>%
   rename(year = 1, nDeaths = 2, population = 3, cDeathRate = 4) %>%
   select(-5)
 
+#CCB Data Analysis
+y2000ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_100_year_causes",range="$C$1:$G$60") %>%
+  rename(Number = deaths_2000) %>% 
+  mutate(year=2000.2)
+y2010ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_100_year_causes")[,c(3,4,5,6,8)] %>%
+  rename(Number = deaths_2010) %>% 
+  mutate(year=2010.2)
+y2018ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_100_year_causes")[,c(3,4,5,6,9)] %>%
+  rename(Number = deaths_2018) %>% 
+  mutate(year=2018.2)
 
+
+
+workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 ```
 # This project is about 
-## Something
-## Something else
+## Analyzing the past 100 years of mortality in California in order to identify patterns and create tools that will empower public health professionals to make more informed decisions.
+## Creating useful visualizations of this mortality data.
 
 ```{r fig.height= 3}
 workGroup1a <- workDat0 %>% 
@@ -57,8 +71,6 @@ workGroup1a <- workDat0 %>%
 workGroup1b <- workGroup1a  %>%
   select(-population, -cDeathRate) %>%
                pivot_wider(names_from = year, values_from = deaths)  
-
-library(forcats)
 
 # Number of Deaths Plot (specificLevel)
 
@@ -106,7 +118,48 @@ ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
 
 ```
 
+<br>
+<hr>
 
+
+```{r}
+workGroup1c <- workDat1 %>% 
+               group_by(year, topLevel, troubleshooting, specificLevel)     %>% 
+               summarise(deaths=sum(Number)) %>%
+  left_join(select(popDat, year, population), by = "year") %>%
+  mutate(cDeathRate = 100000*deaths/population)
+
+#CCB vs. CDC Specific Level (Graph)
+
+ggplot(workGroup1c, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
+  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Number of Deaths as Sorted by specificLevel",
+       y = "Number of Deaths", x = "Cause of Death") +
+  facet_wrap(vars(year),nrow=1) +
+theme(plot.title = element_text(hjust = 0.5))
+
+#CCB vs. CDC Specific Level (Table)
+
+library(formattable)
+
+workGroup1d <- workDat1  %>%
+               group_by(year, specificLevel)     %>% 
+               summarise(deaths=sum(Number)) %>%
+  left_join(select(popDat, year, population), by = "year") %>%
+  mutate(cDeathRate = 100000*deaths/population) %>%
+  select(-population, -cDeathRate) %>%
+               pivot_wider(names_from = year, values_from = deaths)
+
+names(workGroup1d) <- c("specificLevel", "2000CDC", "2000CCB", "2010CDC", "2010CCB", "2018CDC", "2018CCB")
+
+formattable(workGroup1d,
+            align =c("l","c","c","c","c", "c", "c"),
+            list(`specificLevel` = formatter("span", style = ~ style(font.weight = "bold"))
+))
+
+```
 <br>
 <hr>
 
