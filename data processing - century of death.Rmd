@@ -14,6 +14,7 @@ library(tidyr)
 library(ggplot2)
 library(gt)
 library(forcats)
+library(knitr)
 
 y1900 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1900") %>% mutate(year=1900)
 y1910 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1910") %>% mutate(year=1910)
@@ -30,10 +31,12 @@ y1990 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1990") %>% mutate(year=1
 y2000 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2000") %>% mutate(year=2000)
 y2010 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2010") %>% mutate(year=2010)
 y2018 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2018") %>% mutate(year=2018)
+y2019 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2019") %>% mutate(year=2019)
+y2020 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2020") %>% mutate(year=2020)
 
 
 
-workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1929, y1939, y1940, y1950, y1960, y1970, y1990, y2000, y2010, y2018)
+workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1929, y1939, y1940, y1950, y1960, y1970, y1990, y2000, y2010, y2018, y2019, y2020)
 
 
 
@@ -57,9 +60,10 @@ y2018ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_10
 
 workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 ```
-# This project is about 
-## Analyzing the past 100 years of mortality in California in order to identify patterns and create tools that will empower public health professionals to make more informed decisions.
-## Creating useful visualizations of this mortality data.
+# The 100+ years of California mortality project seeks to: 
+## -Gather and standardize/sort data concerning California mortality from 1990 to present day
+## -Analyze this data in order to identify patterns and create tools that will empower public health professionals to make more informed decisions.
+## -Present the results of this project with useful visualizations (bar graphs, trend plots, etc.)
 
 ```{r fig.height= 3}
 workGroup1a <- workDat0 %>% 
@@ -152,7 +156,9 @@ workGroup1d <- workDat1  %>%
   select(-population, -cDeathRate) %>%
                pivot_wider(names_from = year, values_from = deaths)
 
-names(workGroup1d) <- c("specificLevel", "2000CDC", "2000CCB", "2010CDC", "2010CCB", "2018CDC", "2018CCB")
+names(workGroup1d) <- c("specificLevel", "CDC2000", "CCB2000", "CDC2010", "CCB2010", "CDC2018", "CCB2018")
+
+workGroup1d <- workGroup1d %>% mutate(DIF2018 = CDC2018-CCB2018)
 
 formattable(workGroup1d,
             align =c("l","c","c","c","c", "c", "c"),
