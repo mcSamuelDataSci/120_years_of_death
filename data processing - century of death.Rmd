@@ -148,6 +148,9 @@ theme(plot.title = element_text(hjust = 0.5))
 
 library(formattable)
 
+customGreen0 = "#DeF7E9"
+customGreen = "#71CA97"
+
 workGroup1d <- workDat1  %>%
                group_by(year, specificLevel)     %>% 
                summarise(deaths=sum(Number)) %>%
@@ -158,11 +161,16 @@ workGroup1d <- workDat1  %>%
 
 names(workGroup1d) <- c("specificLevel", "CDC2000", "CCB2000", "CDC2010", "CCB2010", "CDC2018", "CCB2018")
 
+workGroup1d <- workGroup1d %>% mutate(DIF2000 = CDC2000-CCB2000)
+workGroup1d <- workGroup1d %>% mutate(DIF2010 = CDC2010-CCB2010)
 workGroup1d <- workGroup1d %>% mutate(DIF2018 = CDC2018-CCB2018)
 
 formattable(workGroup1d,
             align =c("l","c","c","c","c", "c", "c"),
-            list(`specificLevel` = formatter("span", style = ~ style(font.weight = "bold"))
+            list(`specificLevel` = formatter("span", style = ~ style(font.weight = "bold")),
+                 'DIF2000'= color_tile(customGreen, customGreen0),
+                 'DIF2010'= color_tile(customGreen, customGreen0),
+                 'DIF2018'= color_tile(customGreen, customGreen0)
 ))
 
 ```
