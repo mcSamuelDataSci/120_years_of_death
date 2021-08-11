@@ -76,7 +76,7 @@ workGroup1b <- workGroup1a  %>%
   select(-population, -cDeathRate) %>%
                pivot_wider(names_from = year, values_from = deaths)  
 
-# Number of Deaths Plot (specificLevel)
+# Number of Deaths Plot (specificLevel) - INCLUDE THIS CHART
 
 ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
   theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
@@ -190,7 +190,7 @@ workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>%
 ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
   geom_line(size=2) 
 
-# Crude Death Rate Plot
+# Crude Death Rate Plot - INCLUDE THIS CHART
 
 ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
   geom_line(size=2) 
