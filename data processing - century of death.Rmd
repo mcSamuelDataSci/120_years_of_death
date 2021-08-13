@@ -65,7 +65,7 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 ## -Analyze this data in order to identify patterns and create tools that will empower public health professionals to make more informed decisions.
 ## -Present the results of this project with useful visualizations (bar graphs, trend plots, etc.)
 
-```{r fig.height= 3}
+```{r fig.height= 8, fig.width= 15}
 workGroup1a <- workDat0 %>% 
                group_by(year, topLevel, troubleshooting, specificLevel)     %>% 
                summarise(deaths=sum(Number)) %>%
@@ -79,45 +79,65 @@ workGroup1b <- workGroup1a  %>%
 # Number of Deaths Plot (specificLevel) - INCLUDE THIS CHART
 
 ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
+  theme(axis.text.x = element_text(size=10, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
   geom_col() +
   coord_flip() +
   labs(title = "Number of Deaths as Sorted by specificLevel",
        y = "Number of Deaths", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1,scales = "free_x") +
-theme(plot.title = element_text(hjust = 0.5))
+theme(plot.title = element_text(hjust = 0.5, size=30))
 
 # Number of Deaths Plot (troubleshooting)
 
 ggplot(workGroup1a, aes(x=fct_rev(troubleshooting), y=deaths, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
+  theme(axis.text.x = element_text(size=10, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
   geom_col() +
   coord_flip() +
   labs(title = "Troubleshooting Deaths (Alternative to specificLevel)",
        y = "Number of Deaths", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1,scales = "free_x") +
-theme(plot.title = element_text(hjust = 0.5))
+theme(plot.title = element_text(hjust = 0.5, size=30))
 
 # Crude Death Rates (specificLevel)
 
 ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=cDeathRate, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
+  theme(axis.text.x = element_text(size=10, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
   geom_col() +
   coord_flip() +
   labs(title = "Crude Death Rates (specificLevel)",
        y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1) +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5, size=30))
 
 # Crude Death Rates (topLevel)
 
 ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, hjust=0.5)) +
+  theme(axis.text.x = element_text(size=20, hjust=0.5), axis.text.y = element_text(size=20), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
   geom_col(width = 0.9) +
   #coord_flip() +
   labs(title = "Crude Death Rates (topLevel)",
        y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
-  theme(plot.title = element_text(hjust = 0.5))
+  theme(plot.title = element_text(hjust = 0.5, size=30))
 
 
 ```
@@ -126,7 +146,7 @@ ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
 <hr>
 
 
-```{r}
+```{r fig.height= 8, fig.width= 12}
 workGroup1c <- workDat1 %>% 
                group_by(year, topLevel, troubleshooting, specificLevel)     %>% 
                summarise(deaths=sum(Number)) %>%
@@ -136,13 +156,18 @@ workGroup1c <- workDat1 %>%
 #CCB vs. CDC Specific Level (Graph)
 
 ggplot(workGroup1c, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=7, angle=90, hjust=0.5)) +
+  theme(axis.text.x = element_text(size=13, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
   geom_col() +
   coord_flip() +
   labs(title = "Number of Deaths as Sorted by specificLevel",
        y = "Number of Deaths", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1) +
-theme(plot.title = element_text(hjust = 0.5))
+theme(plot.title = element_text(hjust = 0.5, size=25))
 
 #CCB vs. CDC Specific Level (Table)
 
@@ -178,7 +203,7 @@ formattable(workGroup1d,
 <hr>
 
 
-```{r}
+```{r fig.height= 8, fig.width= 12}
 
 workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>% 
                summarise(deaths=sum(Number)) %>%
@@ -188,12 +213,30 @@ workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>%
 
 # Number of Deaths Plot
 ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
-  geom_line(size=2) 
+  theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  geom_line(size=2) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
+  labs(title = "Number of Deaths (topLevel Line Plot)",
+       y = "Deaths", x = "Year") +
+theme(plot.title = element_text(hjust = 0.5, size=25))
 
 # Crude Death Rate Plot - INCLUDE THIS CHART
 
 ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
-  geom_line(size=2) 
+ theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  geom_line(size=2) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
+  labs(title = "Crude Death Rate per 100,000 (topLevel Line Plot)",
+       y = "Deaths per 100,000", x = "Year") +
+theme(plot.title = element_text(hjust = 0.5, size=25))
 
 
 ```
