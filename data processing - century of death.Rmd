@@ -68,8 +68,10 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 # Selected Findings:
 ## -Since 1900, causes of California mortality has shifted from communicable diseases to chronic diseases. It should be noted that communicable diseases sharply decreased until around the 1980's when HIV and drug-resistant strains emerged.
 ## -A significant decrease in death rates has occured (death rate in 1900 was 1,516 deaths per 100,000 individuals, whereas death rate for 2020 was 801 deaths per 100,000 persons). This decrease in death rates can be somewhat attributed to advances in medical care, but perhaps even more important are the strides made through the work of public health professionals (e.g. seatbelt laws and awareness programs, STD prevention education, better enforcment of proper hygiene/sanitation, etc.).
+## -The crude death rate plots, particularly the line plots, should be interpreted carefully, as although the crude rate line plot shows that death rates for communicable disease have significantly decreased since the 1900's, a line plot of the number of deaths since 1900 reveals that though mortality from communicable disease trended downward during the early-mid 20th century, the HIV pandemic (around the 1980's) caused a surge in communicable disease mortality, as did the COVID-19 pandemic.
 ## -In 1900, the leading cause of death was Tuberculosis, followed by other communicable diseases (primarily communicable respiratory diseases). This is in contrast to the leading causes of death on 2020, where the leading causes of death were mostly chronic diseases (Ischemic heart disease and Alzheimer's disease), though it should be noted that COVID-19, a communicable disease, was one of the leading causes of death in 2020 (this is a departure from prior years where the leading causes of death were mainly chronic in nature).
-## The COVID-19 pandemic has provided the public with a revelation only matched by the HIV pandemic: communicable diseases are here to stay and can cause immense death, morbidity, and economic damage.
+## -The COVID-19 pandemic has provided the public with a revelation only matched by the HIV pandemic: communicable diseases are here to stay and can cause immense death, morbidity, and economic damage.
+
 
 ```{r fig.height= 8, fig.width= 15}
 workGroup1a <- workDat0 %>% 
