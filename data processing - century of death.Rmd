@@ -1,10 +1,105 @@
 ---
 title: "Century of Death"
-output: html_document
+output: 
+  html_document:
+    css: "style/branding.css"
+    includes:
+      in_header: header_branding.html
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message= FALSE, warning = FALSE)
+knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, fig.align = "center")
+
+```
+
+```{=html}
+<style type="text/css">
+
+.main-container {
+  max-width: 95% !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+
+body { 
+  font-size: 16px;
+  color: black;
+}
+
+h1.title {
+  font-size: 26px;
+  color: DarkBlue;
+  text-align: center;
+  text-decoration: none;
+}
+
+h3.subtitle {
+  font-size: 16px;
+  color: DarkBlue;
+  text-align: center;
+  text-decoration: none;
+}
+
+h4.author {
+  font-size: 16px;
+  color: DarkBlue;
+  text-align: center;
+  text-decoration: none;
+}
+
+ 
+
+h1 { /* Header 1 */
+  font-size: 22px;
+  color: black;
+  text-decoration: underline;
+}
+
+
+h2 {
+  font-size: 22px;
+  color: DarkBlue;
+  margin-left: 0px;
+}
+
+h3 {
+  font-size: 16px;
+  font-face: bold;
+  margin-left: 20px;
+  color: black;
+}
+
+
+h4 {
+  font-size: 16px;
+  color: DarkBlue;
+}
+
+h5 {
+  font-size: 14px;
+  color: black;
+}
+
+
+
+ul {
+  display: block;
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+  color: black;
+}
+
+
+body{
+  font-family: Helvetica !important;
+}
+
+
+</style>
 ```
 
 ```{r}
@@ -15,6 +110,20 @@ library(ggplot2)
 library(gt)
 library(forcats)
 library(knitr)
+
+# Set theme
+
+cdph1 <- 
+  theme_bw() + 
+  theme(panel.grid.minor = element_blank(), 
+        plot.title       = element_text(size = 16, color="darkblue"),
+        axis.title       = element_text(size = 14), 
+        axis.text  = element_text(size = 14)
+        ) 
+
+theme_set(cdph1)
+
+myLineSize <- 1 
 
 y1900 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1900") %>% mutate(year=1900)
 y1910 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1910") %>% mutate(year=1910)
