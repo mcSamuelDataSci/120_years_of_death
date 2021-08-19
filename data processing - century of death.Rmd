@@ -10,6 +10,23 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, fig.align = "center")
 
+# To-do list:
+## Add 1919 (low priority).
+## Add 1930 and 1980.
+## Add 2019 population data.
+## Verify that 2019 and 2020 sorting are identical.
+## Jaspreet and michael will talk about bringing in the ccb data with code.
+## Address potential missclassification error around 1940-1950. This can be seen in the line plots.
+## Get clinical consultation on this project.
+## Kidney disease should be classified as other chronic. Figure out the "kidney disease and diabetes" issue.
+## Review and edit bullets carefully, making sure to avoid syntax/grammer that is not smooth. Remove any comments that show speculation.
+## Move "non-core" charts to the end, such that the top bullets, titles, and charts is the "story" we would share with others.
+## Add numbers to the chart titles.
+## Make a set of bullets (or prose; whatever you prefer) that succinctly and clearly describes the process of collecting and extracting the data, mapping the "raw" disease names to the specific level, specific level to display level, and display level to top level--for interest, give a couple of example of "colorful/odd" "raw" conditions names from back in the day.
+## explore how what is currently the third chart can be even more "legible" with wider bars (?), different colors, and/or other things you can think of--this is a key chart.
+## Add to the bottom of the markdown the 1-3 key references of work most related to this project.
+## 
+
 ```
 
 ```{=html}
@@ -101,7 +118,6 @@ body{
 
 </style>
 ```
-
 ```{r}
 library(readxl)
 library(dplyr)
@@ -169,22 +185,37 @@ y2018ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_10
 
 workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 ```
-# The 100+ years of California mortality project seeks to: 
-## -Gather and standardize/sort data concerning California mortality from 1990 to present day
-## -Analyze this data in order to identify patterns and create tools that will empower public health professionals to make more informed decisions.
-## -Present the results of this project with useful visualizations (bar graphs, trend plots, etc.)
+
+# Background & Purpose - The 100+ years of California mortality project seeks to:
+-  The 100+ years of California mortality project seeks toGather and standardize/sort data concerning California mortality from 1990 to present day
+-  Analyze this data in order to identify patterns and create tools that will empower public health professionals to make more informed decisions.
+-  Present the results of this project with useful visualizations (bar graphs, trend plots, etc.)
+<br>
+
+# Methods:
+-  Data for the years 1900-1990 was extracted from historical vital statisticsreports published by the CDC National Center for Health Statistics. The data was presented as pdf scans of printed reports, and thus needed to be manually transferred to a digital spreadsheet (e.g., excel). Data for years 2000 and beyond was provided by the CDPH CCB (California Community Burden of Disease and Cost Engine). 
+-  Different years had different names and groupings for diseases, so the data was standardized to allow comparison between years. This standardization involved creating multiple cause groups, each of which contained a set list of diseases maintained across all years. Each disease within a given year was "sorted" into the four cause groups. The cause groups are as follows:
+    -  specificLevel: This was the most thorough/stratified grouping, and attempted to assign an appropriate name to the mortality cause (many of which had outdated names).
+    -  troubleshooting: This cause group provided alternative names/classifications to the specificLevel group (many mortality causes, especially those in earlier years, met the criteria for multiple specificLevel classifications).
+    -  displayLevel: The purpose of this cause group was to group the mortality causes so that they are more relevant/comprehendable to a general audience. Only 17 different classifications are contained in this cause group.
+    -  topLevel: This is the most condensed cause group and containins only 6 classifications.
+<br>
 
 # Selected Findings:
-## -Since 1900, causes of California mortality has shifted from communicable diseases to chronic diseases. It should be noted that communicable diseases sharply decreased until around the 1980's when HIV and drug-resistant strains emerged.
-## -A significant decrease in death rates has occured (death rate in 1900 was 1,516 deaths per 100,000 individuals, whereas death rate for 2020 was 801 deaths per 100,000 persons). This decrease in death rates can be somewhat attributed to advances in medical care, but perhaps even more important are the strides made through the work of public health professionals (e.g. seatbelt laws and awareness programs, STD prevention education, better enforcment of proper hygiene/sanitation, etc.).
-## -The crude death rate plots, particularly the line plots, should be interpreted carefully, as although the crude rate line plot shows that death rates for communicable disease have significantly decreased since the 1900's, a line plot of the number of deaths since 1900 reveals that though mortality from communicable disease trended downward during the early-mid 20th century, the HIV pandemic (around the 1980's) caused a surge in communicable disease mortality, as did the COVID-19 pandemic.
-## -In 1900, the leading cause of death was Tuberculosis, followed by other communicable diseases (primarily communicable respiratory diseases). This is in contrast to the leading causes of death on 2020, where the leading causes of death were mostly chronic diseases (Ischemic heart disease and Alzheimer's disease), though it should be noted that COVID-19, a communicable disease, was one of the leading causes of death in 2020 (this is a departure from prior years where the leading causes of death were mainly chronic in nature).
-## -The COVID-19 pandemic has provided the public with a revelation only matched by the HIV pandemic: communicable diseases are here to stay and can cause immense death, morbidity, and economic damage.
+-  Since 1900, overall causes of California mortality have shifted from communicable diseases to chronic diseases. More specifically, communicable diseases sharply decreased until around the 1980's when HIV and drug-resistant strains emerged (see figure 5).
+-  A significant decrease in death rates has occured (death rate in 1900 was 1,516 deaths per 100,000 individuals, whereas death rate for 2020 was 801 deaths per 100,000 persons). This decrease in death rates can be somewhat attributed to advances in medical care, but perhaps even more important are the strides made through the work of public health professionals.
+-  The crude death rate plots — particularly the line plots — should be interpreted carefully, as although the crude rate line plot shows that death rates for communicable disease have significantly decreased since the 1900's, a line plot of the number of deaths since 1900 reveals that though mortality from communicable disease trended downward during the early-mid 20th century, the HIV pandemic (around the 1980's) caused a surge in communicable disease mortality, as did the COVID-19 pandemic.
+-  In 1900, the leading cause of death was Tuberculosis, followed by other communicable diseases (primarily communicable respiratory diseases). This is in contrast to the leading causes of death on 2020, where the leading causes of death were mostly chronic diseases (Ischemic heart disease and Alzheimer's disease), though it should be noted that COVID-19, a communicable disease, was one of the leading causes of death in 2020 (this is a departure from prior years where the leading causes of death were mainly chronic in nature).
+-  The COVID-19 pandemic, similar to the HIV pandemic, shows that communicable diseases are here to stay and can cause immense death, morbidity, and economic damage.
 
+<br>
+
+<hr>
 
 ```{r fig.height= 8, fig.width= 15}
+
 workGroup1a <- workDat0 %>% 
-               group_by(year, topLevel, troubleshooting, specificLevel)     %>% 
+               group_by(year, topLevel, troubleshooting, displayLevel, specificLevel)     %>%  
                summarise(deaths=sum(Number)) %>%
   left_join(select(popDat, year, population), by = "year") %>%
   mutate(cDeathRate = 100000*deaths/population)
@@ -192,6 +223,31 @@ workGroup1a <- workDat0 %>%
 workGroup1b <- workGroup1a  %>%
   select(-population, -cDeathRate) %>%
                pivot_wider(names_from = year, values_from = deaths)  
+
+# Crude Death Rates (topLevel)
+
+ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
+  theme(axis.text.x = element_text(size=20, hjust=0.5), axis.text.y = element_text(size=20), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
+  geom_col(width = 0.9) +
+  #coord_flip() +
+  labs(title = "1) Crude Death Rates (topLevel)",
+       caption = "Figure 1. ",
+       y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
+  theme(plot.title = element_text(hjust = 0.5, size=30),
+        plot.caption = element_text(hjust = 0, size=20, face = "italic"))
+
+```
+
+<br>
+
+<hr>
+
+```{r fig.height= 8, fig.width= 15}
 
 # Number of Deaths Plot (specificLevel) - INCLUDE THIS CHART
 
@@ -204,14 +260,24 @@ ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
         legend.text = element_text(size=13)) +
   geom_col() +
   coord_flip() +
-  labs(title = "Number of Deaths as Sorted by specificLevel",
+  labs(title = "2) Number of Deaths as Sorted by specificLevel",
+       caption = "Figure 2. Change in specificLevel mortality between 1900 and 2020 grouped by topLevel. Each year has an x-axis of varying magnitude, depending on the number of deaths in that year.",
        y = "Number of Deaths", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1,scales = "free_x") +
-theme(plot.title = element_text(hjust = 0.5, size=30))
+theme(plot.title = element_text(hjust = 0.5, size=30, face = "bold"),
+      plot.caption = element_text(hjust = 0, size=20, face = "italic"))
 
-# Number of Deaths Plot (troubleshooting)
+```
 
-ggplot(workGroup1a, aes(x=fct_rev(troubleshooting), y=deaths, fill = topLevel)) +
+<br>
+
+<hr>
+
+```{r fig.height= 8, fig.width= 15}
+
+# Crude Death Rates (displayLevel) - SHOULD I INCLUDE THIS CHART?
+
+ggplot(workGroup1a, aes(x=fct_rev(displayLevel), y=cDeathRate, fill = topLevel)) +
   theme(axis.text.x = element_text(size=10, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
   theme(legend.key.size = unit(1, 'cm'), 
         legend.key.height = unit(1, 'cm'), 
@@ -220,10 +286,75 @@ ggplot(workGroup1a, aes(x=fct_rev(troubleshooting), y=deaths, fill = topLevel)) 
         legend.text = element_text(size=13)) +
   geom_col() +
   coord_flip() +
-  labs(title = "Troubleshooting Deaths (Alternative to specificLevel)",
-       y = "Number of Deaths", x = "Cause of Death") +
-  facet_wrap(vars(year),nrow=1,scales = "free_x") +
-theme(plot.title = element_text(hjust = 0.5, size=30))
+  labs(title = "3) Crude Death Rates (displayLevel)",
+       caption = "Figure 3. ",
+       y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
+  facet_wrap(vars(year),nrow=1) +
+  theme(plot.title = element_text(hjust = 0.5, size=30, face = "bold"),
+        plot.caption = element_text(hjust = 0, size=20, face = "italic"))
+
+```
+
+<br>
+
+<hr>
+
+```{r fig.height= 8, fig.width= 12}
+
+workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>% 
+               summarise(deaths=sum(Number)) %>%
+  left_join(select(popDat, year, population), by = "year") %>%
+  mutate(cDeathRate = 100000*deaths/population)
+
+
+# Number of Deaths Plot - SHOULD I INCLUDE THIS CHART?
+ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
+  theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  geom_line(size=2) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
+  labs(title = "4) Number of Deaths (topLevel Line Plot)",
+       caption = "Figure 4. INSERT CAPTION",
+       y = "Deaths", x = "Year") +
+theme(plot.title = element_text(hjust = 0.5, size=25, face = "bold"),
+      plot.caption = element_text(hjust = 0, size=20, face = "italic"))
+
+```
+
+<br>
+
+<hr>
+
+```{r fig.height= 8, fig.width= 15}
+
+# Crude Death Rate Plot - INCLUDE THIS CHART
+
+ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
+ theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  geom_line(size=2) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
+  labs(title = "4) Crude Death Rate per 100,000 (topLevel Line Plot)", 
+       caption = "Figure 5. INSERT CAPTION",
+       y = "Deaths per 100,000", x = "Year") +
+theme(plot.title = element_text(hjust = 0.5, size=25, face = "bold"),
+      plot.caption = element_text(hjust = 0, size=20, face = "italic"))
+
+```
+
+<br>
+<hr>
+Appendix
+<hr>
+
+
+```{r fig.height= 8, fig.width= 15}
 
 # Crude Death Rates (specificLevel)
 
@@ -241,29 +372,14 @@ ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=cDeathRate, fill = topLevel)
   facet_wrap(vars(year),nrow=1) +
   theme(plot.title = element_text(hjust = 0.5, size=30))
 
-# Crude Death Rates (topLevel)
-
-ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=20, hjust=0.5), axis.text.y = element_text(size=20), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
-  theme(legend.key.size = unit(1, 'cm'), 
-        legend.key.height = unit(1, 'cm'), 
-        legend.key.width = unit(1, 'cm'), 
-        legend.title = element_text(size=17), 
-        legend.text = element_text(size=13)) +
-  geom_col(width = 0.9) +
-  #coord_flip() +
-  labs(title = "Crude Death Rates (topLevel)",
-       y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
-  theme(plot.title = element_text(hjust = 0.5, size=30))
-
-
 ```
 
 <br>
+
 <hr>
 
-
 ```{r fig.height= 8, fig.width= 12}
+
 workGroup1c <- workDat1 %>% 
                group_by(year, topLevel, troubleshooting, specificLevel)     %>% 
                summarise(deaths=sum(Number)) %>%
@@ -316,54 +432,14 @@ formattable(workGroup1d,
 ))
 
 ```
-<br>
-<hr>
-
-
-```{r fig.height= 8, fig.width= 12}
-
-workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>% 
-               summarise(deaths=sum(Number)) %>%
-  left_join(select(popDat, year, population), by = "year") %>%
-  mutate(cDeathRate = 100000*deaths/population)
-
-
-# Number of Deaths Plot
-ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
-  theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
-  geom_line(size=2) +
-  theme(legend.key.size = unit(1, 'cm'), 
-        legend.key.height = unit(1, 'cm'), 
-        legend.key.width = unit(1, 'cm'), 
-        legend.title = element_text(size=17), 
-        legend.text = element_text(size=13)) +
-  labs(title = "Number of Deaths (topLevel Line Plot)",
-       y = "Deaths", x = "Year") +
-theme(plot.title = element_text(hjust = 0.5, size=25))
-
-# Crude Death Rate Plot - INCLUDE THIS CHART
-
-ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
- theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
-  geom_line(size=2) +
-  theme(legend.key.size = unit(1, 'cm'), 
-        legend.key.height = unit(1, 'cm'), 
-        legend.key.width = unit(1, 'cm'), 
-        legend.title = element_text(size=17), 
-        legend.text = element_text(size=13)) +
-  labs(title = "Crude Death Rate per 100,000 (topLevel Line Plot)",
-       y = "Deaths per 100,000", x = "Year") +
-theme(plot.title = element_text(hjust = 0.5, size=25))
-
-
-```
 
 <br>
+
 <hr>
 
 ```{r}
 
-#yNformat <- fmt_number(columns = 4:13, use_seps = TRUE, decimals = 0) 
+#yNformat <- fmt_number(columns = 5:19, use_seps = TRUE, decimals = 0) 
 
 workGroup1b %>% gt()  %>%
   tab_options(table.font.size = 9) %>%
@@ -371,8 +447,8 @@ workGroup1b %>% gt()  %>%
     style = list(cell_fill(color = "lightcyan"),
                  cell_text(weight = "bold")  ),
     locations =  cells_row_groups()    ) %>%
-    fmt_number(columns = 4:12, use_seps = TRUE, decimals = 0) %>%
-  summary_rows(columns= 4:12, fns = list(sum = ~sum(.,na.rm = TRUE)), formatter = fmt_number)
+    fmt_number(columns = 5:19, use_seps = TRUE, decimals = 0) %>%
+  summary_rows(columns= 5:19, fns = list(sum = ~sum(.,na.rm = TRUE)), formatter = fmt_number)
   
 
 
@@ -382,14 +458,9 @@ workGroup1b %>% gt()  %>%
 
 ```
 
-
-
-
-
 ```{r}
 #library(gitcreds)
 #gitcreds_set()
 
 
 ```
-
