@@ -12,20 +12,24 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, f
 
 # To-do list:
 ## Add 1919 (low priority).
-## Add 1930 and 1980.
-## Add 2019 population data.
-## Verify that 2019 and 2020 sorting are identical.
-## Jaspreet and michael will talk about bringing in the ccb data with code.
-## Address potential missclassification error around 1940-1950. This can be seen in the line plots.
+## Add 1930 (1930 vital statistics report unavailable).
+## Jaspreet and Michael will talk about bringing in the ccb data with code.
+## Address potential miss classification error around 1940-1950. This can be seen in the line plots.
 ## Get clinical consultation on this project.
-## Kidney disease should be classified as other chronic. Figure out the "kidney disease and diabetes" issue.
+## Figure out the "kidney disease and diabetes" issue. 
 ## Review and edit bullets carefully, making sure to avoid syntax/grammer that is not smooth. Remove any comments that show speculation.
-## Move "non-core" charts to the end, such that the top bullets, titles, and charts is the "story" we would share with others.
-## Add numbers to the chart titles.
+## Move "non-core" charts to the end, such that the top bullets, titles, and charts is the "story" we would share with others. -IN PROGRESS-
 ## Make a set of bullets (or prose; whatever you prefer) that succinctly and clearly describes the process of collecting and extracting the data, mapping the "raw" disease names to the specific level, specific level to display level, and display level to top level--for interest, give a couple of example of "colorful/odd" "raw" conditions names from back in the day.
 ## explore how what is currently the third chart can be even more "legible" with wider bars (?), different colors, and/or other things you can think of--this is a key chart.
 ## Add to the bottom of the markdown the 1-3 key references of work most related to this project.
-## 
+
+# Completed Items:
+## Add numbers to the chart titles. -COMPLETED-
+## Kidney disease should be classified as other chronic. -COMPLETED-
+## Verify that 2019 and 2020 sorting are identical. -COMPLETED-
+## Add 2019 population data. -COMPLETED-
+## Add 1980. -COMPLETED-
+
 
 ```
 
@@ -152,6 +156,7 @@ y1940 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1940") %>% mutate(year=1
 y1950 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1950") %>% mutate(year=1950)
 y1960 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1960") %>% mutate(year=1960)
 y1970 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1970") %>% mutate(year=1970)
+y1980 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1980") %>% mutate(year=1980)
 y1990 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1990") %>% mutate(year=1990)
 y2000 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2000") %>% mutate(year=2000)
 y2010 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2010") %>% mutate(year=2010)
@@ -161,7 +166,7 @@ y2020 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2020") %>% mutate(year=2
 
 
 
-workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1929, y1939, y1940, y1950, y1960, y1970, y1990, y2000, y2010, y2018, y2019, y2020)
+workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1929, y1939, y1940, y1950, y1960, y1970, y1980, y1990, y2000, y2010, y2018, y2019, y2020)
 
 
 
@@ -199,6 +204,8 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
     -  troubleshooting: This cause group provided alternative names/classifications to the specificLevel group (many mortality causes, especially those in earlier years, met the criteria for multiple specificLevel classifications).
     -  displayLevel: The purpose of this cause group was to group the mortality causes so that they are more relevant/comprehendable to a general audience. Only 17 different classifications are contained in this cause group.
     -  topLevel: This is the most condensed cause group and containins only 6 classifications.
+-Data from the CCB was compared to data obtained for the same years from CDC WONDER in order to verify proper sorting/classification of death causes.
+-These spreadsheets were then inputted into R to allow for statistical analysis and the development of visual aides.
 <br>
 
 # Selected Findings:
