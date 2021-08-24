@@ -233,20 +233,52 @@ workGroup1b <- workGroup1a  %>%
 
 # Crude Death Rates (topLevel)
 
-ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=20, hjust=0.5), axis.text.y = element_text(size=20), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
-  theme(legend.key.size = unit(1, 'cm'), 
-        legend.key.height = unit(1, 'cm'), 
-        legend.key.width = unit(1, 'cm'), 
-        legend.title = element_text(size=17), 
-        legend.text = element_text(size=13)) +
-  geom_col(width = 0.9) +
-  #coord_flip() +
+# Old
+
+# ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
+#   theme(axis.text.x = element_text(size=20, hjust=0.5), axis.text.y = element_text(size=20), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+#   theme(legend.key.size = unit(1, 'cm'), 
+#         legend.key.height = unit(1, 'cm'), 
+#         legend.key.width = unit(1, 'cm'), 
+#         legend.title = element_text(size=17), 
+#         legend.text = element_text(size=13)) +
+#   geom_col(width = 0.9) +
+#   #coord_flip() +
+#   labs(title = "1) Crude Death Rates (topLevel)",
+#        caption = "Figure 1. ",
+#        y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
+#   theme(plot.title = element_text(hjust = 0.5, size=30),
+#         plot.caption = element_text(hjust = 0, size=20, face = "italic"))
+
+# New
+
+workGroup1a_plot_df <- workGroup1a %>%
+  group_by(year, topLevel) %>%
+  summarise(deaths = sum(deaths, na.rm = T),
+            population = mean(population)) %>%
+  ungroup() %>%
+  mutate(cDeathRate = 100000*deaths/population) %>%
+  mutate(barWidth = case_when(year %in% c(1939, 1940) ~ 0.9, 
+                              year %in% c(1920, 1929, 2020) ~ 2, 
+                              year %in% c(1900, 1910, 1950, 1960, 1970, 1990, 2000, 2010) ~ 6, 
+                              year %in% c(1917, 1918, 1919, 2018) ~ 0.7))
+
+
+ggplot(workGroup1a_plot_df, aes(x=year, y=cDeathRate, fill = topLevel, width = barWidth)) +
+  geom_bar(colour = 'black', stat = 'identity') +
+  scale_x_continuous(breaks = seq(1900, 2025, by = 10),limits = c(1895, 2025)) +
   labs(title = "1) Crude Death Rates (topLevel)",
-       caption = "Figure 1. ",
-       y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
-  theme(plot.title = element_text(hjust = 0.5, size=30),
-        plot.caption = element_text(hjust = 0, size=20, face = "italic"))
+       y = "Crude Death Rate per 100k Pop", x = "Cause of Death", caption = "Figure 1. ") +
+  theme(plot.title = element_text(hjust = 0.5, size=30), 
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), 
+        axis.title.y = element_text(size=22),
+        plot.caption = element_text(hjust = 0, size=20, face = "italic"),
+        legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'),
+        legend.key.width = unit(1, 'cm'),
+        legend.title = element_text(size=17),
+        legend.text = element_text(size=13)
+        )
 
 ```
 
