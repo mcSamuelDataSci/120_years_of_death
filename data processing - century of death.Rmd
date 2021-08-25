@@ -22,6 +22,7 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, f
 ## Make a set of bullets (or prose; whatever you prefer) that succinctly and clearly describes the process of collecting and extracting the data, mapping the "raw" disease names to the specific level, specific level to display level, and display level to top level--for interest, give a couple of example of "colorful/odd" "raw" conditions names from back in the day.
 ## explore how what is currently the third chart can be even more "legible" with wider bars (?), different colors, and/or other things you can think of--this is a key chart.
 ## Add to the bottom of the markdown the 1-3 key references of work most related to this project.
+## Align trend line plots side-to-side.
 
 # Completed Items:
 ## Add numbers to the chart titles. -COMPLETED-
