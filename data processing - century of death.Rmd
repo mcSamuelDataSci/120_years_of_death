@@ -131,6 +131,7 @@ library(ggplot2)
 library(gt)
 library(forcats)
 library(knitr)
+library(gridExtra)
 
 # Set theme
 
@@ -234,6 +235,12 @@ workGroup1b <- workGroup1a  %>%
 
 # Crude Death Rates (topLevel)
 
+###FOR MICHAEL
+workGroupExplore  <- workDat0 %>%
+                      group_by(year, topLevel, displayLevel, specificLevel)     %>%
+                      summarise(deaths=sum(Number)) %>%
+                      pivot_wider(names_from = year, values_from = deaths)
+
 # Old
 
 # ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
@@ -261,7 +268,7 @@ workGroup1a_plot_df <- workGroup1a %>%
   mutate(cDeathRate = 100000*deaths/population) %>%
   mutate(barWidth = case_when(year %in% c(1939, 1940) ~ 0.9, 
                               year %in% c(1920, 1929, 2020) ~ 2, 
-                              year %in% c(1900, 1910, 1950, 1960, 1970, 1990, 2000, 2010) ~ 6, 
+                              year %in% c(1900, 1910, 1950, 1960, 1970, 1980, 1990, 2000, 2010) ~ 6, 
                               year %in% c(1917, 1918, 1919, 2018) ~ 0.7))
 
 
@@ -269,7 +276,7 @@ ggplot(workGroup1a_plot_df, aes(x=year, y=cDeathRate, fill = topLevel, width = b
   geom_bar(colour = 'black', stat = 'identity') +
   scale_x_continuous(breaks = seq(1900, 2025, by = 10),limits = c(1895, 2025)) +
   labs(title = "1) Crude Death Rates (topLevel)",
-       y = "Crude Death Rate per 100k Pop", x = "Cause of Death", caption = "Figure 1. ") +
+       y = "Crude Death Rate per 100k Pop", x = "Cause of Death", caption = "Figure 1. Yearly crude death rate per 100,000 is stratified by topLevel with the purpose of revealing long-term mortality trends") +
   theme(plot.title = element_text(hjust = 0.5, size=30), 
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), 
         axis.title.y = element_text(size=22),
@@ -380,11 +387,21 @@ ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
         legend.key.width = unit(1, 'cm'), 
         legend.title = element_text(size=17), 
         legend.text = element_text(size=13)) +
-  labs(title = "4) Crude Death Rate per 100,000 (topLevel Line Plot)", 
+  labs(title = "5) Crude Death Rate per 100,000 (topLevel Line Plot)", 
        caption = "Figure 5. INSERT CAPTION",
        y = "Deaths per 100,000", x = "Year") +
 theme(plot.title = element_text(hjust = 0.5, size=25, face = "bold"),
       plot.caption = element_text(hjust = 0, size=20, face = "italic"))
+
+```
+<br>
+
+<hr>
+
+```{r fig.height= 8, fig.width= 15}
+
+
+
 
 ```
 
