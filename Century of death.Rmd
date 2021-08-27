@@ -350,7 +350,7 @@ ggplot(workGroup1a, aes(x=fct_rev(displayLevel), y=cDeathRate, fill = topLevel))
 
 # Figure 4.
 
-```{r fig.height= 8, fig.width= 12}
+```{r fig.height= 7, fig.width= 12}
 
 workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>% 
                summarise(deaths=sum(Number)) %>%
@@ -358,46 +358,52 @@ workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>%
   mutate(cDeathRate = 100000*deaths/population)
 
 
-# Number of Deaths Plot - SHOULD I INCLUDE THIS CHART?
-ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
-  theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+
+# Number of Deaths Plot 
+trendPlot_Ndeaths <- ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
   geom_line(size=2) +
-  theme(legend.key.size = unit(1, 'cm'), 
-        legend.key.height = unit(1, 'cm'), 
-        legend.key.width = unit(1, 'cm'), 
-        legend.title = element_text(size=17), 
-        legend.text = element_text(size=13)) +
-  labs(title = "4) Number of Deaths (topLevel Line Plot)",
+  labs(title = "Number of Deaths",
        y = "Deaths", x = "Year") +
-theme(plot.title = element_text(hjust = 0.5, size=25, face = "bold"))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
 
-```
 
-<br>
 
-<hr>
-
-# Figure 5.
-
-```{r fig.height= 8, fig.width= 15}
-
-# Crude Death Rate Plot - INCLUDE THIS CHART
-
-ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
- theme(axis.text.x = element_text(size=15), axis.text.y = element_text(size=15), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+# Crude Death Rate Plot 
+trendPlot_cRates <- ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
   geom_line(size=2) +
-  theme(legend.key.size = unit(1, 'cm'), 
-        legend.key.height = unit(1, 'cm'), 
-        legend.key.width = unit(1, 'cm'), 
-        legend.title = element_text(size=17), 
-        legend.text = element_text(size=13)) +
-  labs(title = "5) Crude Death Rate per 100,000 (topLevel Line Plot)", 
+  labs(title = "Crude Death Rate per 100,000", 
        y = "Deaths per 100,000", x = "Year") +
-theme(plot.title = element_text(hjust = 0.5, size=25, face = "bold"))
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
+
+# Cowplot - Ndeaths & cRate
+trendPlots_Ndeaths_cRates <- cowplot::plot_grid(
+  trendPlot_Ndeaths + theme(legend.position = 'none'),
+                                  NULL, 
+  trendPlot_cRates + theme(legend.position = 'none'),
+  ncol = 3, rel_widths = c(0.495, 0.01, 0.495))
+
+# Get Legend
+legend <- cowplot::get_legend(
+  # create some space to the left of the legend
+  trendPlot_cRates + theme(legend.box.margin = margin(12, 0, 0, 0), 
+                           legend.position = "bottom", 
+                           legend.title = element_text(size=17), 
+                           legend.text = element_text(size=13))
+)
+
+# Final Plot
+cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 2, rel_heights = c(3, .3))
+
 
 ```
+
 <br>
+
 <hr>
+
+
 Appendix
 <hr>
 
