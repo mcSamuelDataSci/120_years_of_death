@@ -1,10 +1,11 @@
 ---
 title: "Century of Death"
-output: 
+output:
   html_document:
-    css: "style/branding.css"
+    css: style/branding.css
     includes:
       in_header: header_branding.html
+  word_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -148,24 +149,24 @@ theme_set(cdph1)
 
 myLineSize <- 1 
 
-y1900 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1900") %>% mutate(year=1900)
-y1910 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1910") %>% mutate(year=1910)
-y1917 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1917") %>% mutate(year=1917)
-y1918 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1918") %>% mutate(year=1918)
-y1920 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1920") %>% mutate(year=1920)
-y1929 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1929") %>% mutate(year=1929)
-y1939 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1939") %>% mutate(year=1939)
-y1940 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1940") %>% mutate(year=1940)
-y1950 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1950") %>% mutate(year=1950)
-y1960 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1960") %>% mutate(year=1960)
-y1970 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1970") %>% mutate(year=1970)
-y1980 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1980") %>% mutate(year=1980)
-y1990 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y1990") %>% mutate(year=1990)
-y2000 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2000") %>% mutate(year=2000)
-y2010 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2010") %>% mutate(year=2010)
-y2018 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2018") %>% mutate(year=2018)
-y2019 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2019") %>% mutate(year=2019)
-y2020 <- read_excel("CA 1900-2020 Project.xlsx",sheet="y2020") %>% mutate(year=2020)
+y1900 <- read_excel("Century of death DATA.xlsx",sheet="y1900") %>% mutate(year=1900)
+y1910 <- read_excel("Century of death DATA.xlsx",sheet="y1910") %>% mutate(year=1910)
+y1917 <- read_excel("Century of death DATA.xlsx",sheet="y1917") %>% mutate(year=1917)
+y1918 <- read_excel("Century of death DATA.xlsx",sheet="y1918") %>% mutate(year=1918)
+y1920 <- read_excel("Century of death DATA.xlsx",sheet="y1920") %>% mutate(year=1920)
+y1929 <- read_excel("Century of death DATA.xlsx",sheet="y1929") %>% mutate(year=1929)
+y1939 <- read_excel("Century of death DATA.xlsx",sheet="y1939") %>% mutate(year=1939)
+y1940 <- read_excel("Century of death DATA.xlsx",sheet="y1940") %>% mutate(year=1940)
+y1950 <- read_excel("Century of death DATA.xlsx",sheet="y1950") %>% mutate(year=1950)
+y1960 <- read_excel("Century of death DATA.xlsx",sheet="y1960") %>% mutate(year=1960)
+y1970 <- read_excel("Century of death DATA.xlsx",sheet="y1970") %>% mutate(year=1970)
+y1980 <- read_excel("Century of death DATA.xlsx",sheet="y1980") %>% mutate(year=1980)
+y1990 <- read_excel("Century of death DATA.xlsx",sheet="y1990") %>% mutate(year=1990)
+y2000 <- read_excel("Century of death DATA.xlsx",sheet="y2000") %>% mutate(year=2000)
+y2010 <- read_excel("Century of death DATA.xlsx",sheet="y2010") %>% mutate(year=2010)
+y2018 <- read_excel("Century of death DATA.xlsx",sheet="y2018") %>% mutate(year=2018)
+y2019 <- read_excel("Century of death DATA.xlsx",sheet="y2019") %>% mutate(year=2019)
+y2020 <- read_excel("Century of death DATA.xlsx",sheet="y2020") %>% mutate(year=2020)
 
 
 
@@ -174,18 +175,18 @@ workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1929, y1939, y1940, y1
 
 
 # Deaths and Population sheet
-popDat <- read_excel("CA 1900-2020 Project.xlsx",sheet="Deaths and Popu.") %>%
+popDat <- read_excel("Century of death DATA.xlsx",sheet="Deaths and Popu.") %>%
   rename(year = 1, nDeaths = 2, population = 3, cDeathRate = 4) %>%
   select(-5)
 
 #CCB Data Analysis
-y2000ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_100_year_causes",range="$C$1:$G$60") %>%
+y2000ccb <- read_excel("Century of death CCB Mapping.xlsx",sheet="ccb_cause_to_100_year_causes",range="$C$1:$G$60") %>%
   rename(Number = deaths_2000) %>% 
   mutate(year=2000.2)
-y2010ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_100_year_causes")[,c(3,4,5,6,8)] %>%
+y2010ccb <- read_excel("Century of death CCB Mapping.xlsx",sheet="ccb_cause_to_100_year_causes")[,c(3,4,5,6,8)] %>%
   rename(Number = deaths_2010) %>% 
   mutate(year=2010.2)
-y2018ccb <- read_excel("ccb_cause_to_100_year_cause.xlsx",sheet="ccb_cause_to_100_year_causes")[,c(3,4,5,6,9)] %>%
+y2018ccb <- read_excel("Century of death CCB Mapping.xlsx",sheet="ccb_cause_to_100_year_causes")[,c(3,4,5,6,9)] %>%
   rename(Number = deaths_2018) %>% 
   mutate(year=2018.2)
 
