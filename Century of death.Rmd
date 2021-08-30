@@ -330,7 +330,7 @@ workGroup3_plot <- workGroup3 %>% filter(year != 1940)
 
 # Number of Deaths Plot 
 trendPlot_Ndeaths <- ggplot(workGroup3_plot, aes(x=year, y=deaths, color=topLevel)) +
-  geom_line(size=2) +
+  geom_line(size=1.6) +
   labs(title = "2A. Number of Deaths",
        y = "Deaths", x = "Year") +
   theme(plot.title = element_text(hjust=0.5),
@@ -340,7 +340,7 @@ trendPlot_Ndeaths <- ggplot(workGroup3_plot, aes(x=year, y=deaths, color=topLeve
 
 # Crude Death Rate Plot 
 trendPlot_cRates <- ggplot(workGroup3_plot, aes(x=year, y=cDeathRate, color=topLevel)) +
-  geom_line(size=2) +
+  geom_line(size=1.6) +
   labs(title = "2B. Crude Death Rate per 100,000", 
        y = "Deaths per 100,000", x = "Year") +
   theme(plot.title = element_text(hjust=0.5),
@@ -370,6 +370,13 @@ cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 2, rel_heights = c(
 
 
 
+```
+
+
+<br><br>
+
+```{r fig.height= 9, fig.width= 12}
+
 # Top bottom
 trendPlots_Ndeaths_cRates <- cowplot::plot_grid(
   trendPlot_Ndeaths + theme(legend.position = 'none'),
@@ -388,7 +395,6 @@ legend <- cowplot::get_legend(
 
 # Final Plot
 cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 1, rel_widths = c(3, .5))
-
 
 ```
 
