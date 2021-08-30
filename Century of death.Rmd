@@ -285,15 +285,16 @@ workGroupExplore  <- workDat0 %>%
 # New
 
 workGroup1a_plot_df <- workGroup1a %>%
+  filter(year != 1940) %>%
   group_by(year, topLevel) %>%
   summarise(deaths = sum(deaths, na.rm = T),
             population = mean(population)) %>%
   ungroup() %>%
   mutate(cDeathRate = 100000*deaths/population) %>%
-  mutate(barWidth = case_when(year %in% c(1939, 1940) ~ 0.9, 
-                              year %in% c(1920, 1929, 2020) ~ 2, 
-                              year %in% c(1900, 1910, 1950, 1960, 1970, 1980, 1990, 2000, 2010) ~ 6, 
-                              year %in% c(1917, 1918, 1919, 2018) ~ 0.7))
+  mutate(barWidth = case_when( #year %in% c(1939) ~ 0.9, 
+                              year %in% c(1920, 2020) ~ 2, 
+                              year %in% c(1900, 1910, 1929, 1939, 1950, 1960, 1970, 1980, 1990, 2000, 2010) ~ 6, 
+                              year %in% c(1917, 1918, 1919, 2018, 2019) ~ 0.5))
 
 
 ggplot(workGroup1a_plot_df, aes(x=year, y=cDeathRate, fill = topLevel, width = barWidth)) +
@@ -328,46 +329,46 @@ workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>%
 
 workGroup3_plot <- workGroup3 %>% filter(year != 1940)
 
-# Number of Deaths Plot 
-trendPlot_Ndeaths <- ggplot(workGroup3_plot, aes(x=year, y=deaths, color=topLevel)) +
-  geom_line(size=1.6) +
-  labs(title = "2A. Number of Deaths",
-       y = "Deaths", x = "Year") +
-  theme(plot.title = element_text(hjust=0.5),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-
-
-# Crude Death Rate Plot 
-trendPlot_cRates <- ggplot(workGroup3_plot, aes(x=year, y=cDeathRate, color=topLevel)) +
-  geom_line(size=1.6) +
-  labs(title = "2B. Crude Death Rate per 100,000", 
-       y = "Deaths per 100,000", x = "Year") +
-  theme(plot.title = element_text(hjust=0.5),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
-
-
-
-# Cowplot - Ndeaths & cRate
-trendPlots_Ndeaths_cRates <- cowplot::plot_grid(
-  trendPlot_Ndeaths + theme(legend.position = 'none'),
-                                  NULL, 
-  trendPlot_cRates + theme(legend.position = 'none'),
-  ncol = 3, rel_widths = c(0.495, 0.01, 0.495))
-
-# Get Legend
-legend <- cowplot::get_legend(
-  # create some space to the left of the legend
-  trendPlot_cRates + theme(legend.box.margin = margin(12, 0, 0, 0), 
-                           legend.position = "bottom", 
-                           legend.title = element_text(size=17), 
-                           legend.text = element_text(size=13))
-)
-
-# Final Plot
-cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 2, rel_heights = c(3, .3))
-
-
+# # Number of Deaths Plot 
+# trendPlot_Ndeaths <- ggplot(workGroup3_plot, aes(x=year, y=deaths, color=topLevel)) +
+#   geom_line(size=1.6) +
+#   labs(title = "2A. Number of Deaths",
+#        y = "Deaths", x = "Year") +
+#   theme(plot.title = element_text(hjust=0.5),
+#         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+# 
+# 
+# 
+# # Crude Death Rate Plot 
+# trendPlot_cRates <- ggplot(workGroup3_plot, aes(x=year, y=cDeathRate, color=topLevel)) +
+#   geom_line(size=1.6) +
+#   labs(title = "2B. Crude Death Rate per 100,000", 
+#        y = "Deaths per 100,000", x = "Year") +
+#   theme(plot.title = element_text(hjust=0.5),
+#         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+# 
+# 
+# 
+# # Cowplot - Ndeaths & cRate
+# trendPlots_Ndeaths_cRates <- cowplot::plot_grid(
+#   trendPlot_Ndeaths + theme(legend.position = 'none'),
+#                                   NULL, 
+#   trendPlot_cRates + theme(legend.position = 'none'),
+#   ncol = 3, rel_widths = c(0.495, 0.01, 0.495))
+# 
+# # Get Legend
+# legend <- cowplot::get_legend(
+#   # create some space to the left of the legend
+#   trendPlot_cRates + theme(legend.box.margin = margin(12, 0, 0, 0), 
+#                            legend.position = "bottom", 
+#                            legend.title = element_text(size=17), 
+#                            legend.text = element_text(size=13))
+# )
+# 
+# # Final Plot
+# cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 2, rel_heights = c(3, .3))
+# 
+# 
 
 
 ```
@@ -378,24 +379,24 @@ cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 2, rel_heights = c(
 
 ```{r fig.height= 9, fig.width= 12}
 
-# Top bottom
-trendPlots_Ndeaths_cRates <- cowplot::plot_grid(
-  trendPlot_Ndeaths + theme(legend.position = 'none'),
-                                  NULL, 
-  trendPlot_cRates + theme(legend.position = 'none'),
-  ncol = 1, rel_heights = c(0.495, 0.01, 0.495))
-
-# Get Legend
-legend <- cowplot::get_legend(
-  # create some space to the left of the legend
-  trendPlot_cRates + theme(legend.box.margin = margin(0, 0, 0, 12), 
-                           legend.position = "right", 
-                           legend.title = element_text(size=17), 
-                           legend.text = element_text(size=13))
-)
-
-# Final Plot
-cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 1, rel_widths = c(3, .5))
+# # Top bottom
+# trendPlots_Ndeaths_cRates <- cowplot::plot_grid(
+#   trendPlot_Ndeaths + theme(legend.position = 'none'),
+#                                   NULL, 
+#   trendPlot_cRates + theme(legend.position = 'none'),
+#   ncol = 1, rel_heights = c(0.495, 0.01, 0.495))
+# 
+# # Get Legend
+# legend <- cowplot::get_legend(
+#   # create some space to the left of the legend
+#   trendPlot_cRates + theme(legend.box.margin = margin(0, 0, 0, 12), 
+#                            legend.position = "right", 
+#                            legend.title = element_text(size=17), 
+#                            legend.text = element_text(size=13))
+# )
+# 
+# # Final Plot
+# cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 1, rel_widths = c(3, .5))
 
 ```
 
@@ -403,24 +404,26 @@ cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 1, rel_widths = c(3
 
 ```{r fig.height= 9, fig.width= 12}
 
-# Number of Deaths Plot 
-trendPlot_Ndeaths <- ggplot(workGroup3_plot, aes(x=year, y=deaths, color=topLevel)) +
-  geom_line(size=1.6) +
-  labs(title = "2A. Number of Deaths",
-       y = "Deaths", x = "Year") +
-  theme(plot.title = element_text(hjust=0.5),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+# Facet Grid
 
 workGroup3_plot1 <- workGroup3_plot %>%
-  pivot_longer(-c(year, topLevel, population), names_to = "type", values_to = "value") 
+  pivot_longer(-c(year, topLevel, population), names_to = "type", values_to = "value") %>%
+  mutate(type = ifelse(type == 'cDeathRate', "Crude Death Rate", "Number of Deaths"), 
+         type = factor(type, levels = c("Number of Deaths", "Crude Death Rate")))
 
 ggplot(workGroup3_plot1, aes(x=year, y=value, color=topLevel)) +
   geom_line(size=1.6) +
-  labs(title = "2C.",
+  labs(title = "2A.",
        y = "Value", x = "Year") +
   facet_grid(rows = vars(type), scales = "free") +
   theme(plot.title = element_text(hjust=0.5),
-        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1), 
+        strip.text.y = element_text(size = 16), 
+        legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'),
+        legend.key.width = unit(1, 'cm'),
+        legend.title = element_text(size=17),
+        legend.text = element_text(size=13))
 
 
 
@@ -440,10 +443,10 @@ workGroup1b_plot_df <- workGroup1a %>%
             population = mean(population)) %>%
   ungroup() %>%
   mutate(cDeathRate = 100000*deaths/population) %>%
-  mutate(barWidth = case_when(year %in% c(1939, 1940) ~ 0.9, 
-                              year %in% c(1920, 1929, 2020) ~ 2, 
-                              year %in% c(1900, 1910, 1950, 1960, 1970, 1980, 1990, 2000, 2010) ~ 6, 
-                              year %in% c(1917, 1918, 1919, 2018) ~ 0.7))
+  mutate(barWidth = case_when( #year %in% c(1939) ~ 0.9, 
+                              year %in% c(1920, 2020) ~ 2, 
+                              year %in% c(1900, 1910, 1929, 1939, 1950, 1960, 1970, 1980, 1990, 2000, 2010) ~ 6, 
+                              year %in% c(1917, 1918, 1919, 2018, 2019) ~ 0.5))
 
 ggplot(workGroup1b_plot_df, aes(x=year, y=cDeathRate, fill = displayLevel, width = barWidth)) +
   geom_bar(colour = 'black', stat = 'identity') +
