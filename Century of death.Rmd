@@ -375,6 +375,7 @@ cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 2, rel_heights = c(
 
 <br><br>
 
+
 ```{r fig.height= 9, fig.width= 12}
 
 # Top bottom
@@ -395,6 +396,33 @@ legend <- cowplot::get_legend(
 
 # Final Plot
 cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 1, rel_widths = c(3, .5))
+
+```
+
+<br><br>
+
+```{r fig.height= 9, fig.width= 12}
+
+# Number of Deaths Plot 
+trendPlot_Ndeaths <- ggplot(workGroup3_plot, aes(x=year, y=deaths, color=topLevel)) +
+  geom_line(size=1.6) +
+  labs(title = "2A. Number of Deaths",
+       y = "Deaths", x = "Year") +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+workGroup3_plot1 <- workGroup3_plot %>%
+  pivot_longer(-c(year, topLevel, population), names_to = "type", values_to = "value") 
+
+ggplot(workGroup3_plot1, aes(x=year, y=value, color=topLevel)) +
+  geom_line(size=1.6) +
+  labs(title = "2C.",
+       y = "Value", x = "Year") +
+  facet_grid(rows = vars(type), scales = "free") +
+  theme(plot.title = element_text(hjust=0.5),
+        axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+
 
 ```
 
