@@ -315,7 +315,7 @@ ggplot(workGroup1a_plot_df, aes(x=year, y=cDeathRate, fill = topLevel, width = b
 
 <hr>
 
-# Figure 2. - 
+# Figure 2. - Trends in both number of deaths (2A) and crude death rates (2B) by "topLevel" conditions, 1900-2020, California
 
 ```{r fig.height= 7, fig.width= 12}
 
@@ -329,7 +329,7 @@ workGroup3 <- workDat0 %>% group_by(year, topLevel)  %>%
 # Number of Deaths Plot 
 trendPlot_Ndeaths <- ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
   geom_line(size=2) +
-  labs(title = "Number of Deaths",
+  labs(title = "2A. Number of Deaths",
        y = "Deaths", x = "Year") +
   theme(plot.title = element_text(hjust=0.5),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
@@ -339,7 +339,7 @@ trendPlot_Ndeaths <- ggplot(workGroup3, aes(x=year, y=deaths, color=topLevel)) +
 # Crude Death Rate Plot 
 trendPlot_cRates <- ggplot(workGroup3, aes(x=year, y=cDeathRate, color=topLevel)) +
   geom_line(size=2) +
-  labs(title = "Crude Death Rate per 100,000", 
+  labs(title = "2B. Crude Death Rate per 100,000", 
        y = "Deaths per 100,000", x = "Year") +
   theme(plot.title = element_text(hjust=0.5),
         axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
@@ -372,7 +372,7 @@ cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 2, rel_heights = c(
 
 <hr>
 
-# Figure 3. - 
+# Figure 3. - Trend in death rates by "displayLevel" conditions, by decade and additional pandemic years.
 
 ```{r fig.height= 8, fig.width= 15}
 
@@ -435,7 +435,7 @@ ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
 
 <hr>
 
-# Figure 5. - Crude Death Rates (displayLevel)
+# Figure 5. - Crude death rates by decade and additional pandemic years (displayLevel)
   
 ```{r fig.height= 8, fig.width= 15}
 
