@@ -215,6 +215,8 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 -   While data are available for most individual years, due to resource constraints we extracted data for only the "decade" years, except:
 
     -   also 1917, 1918, and 1919 to visualize the impact of the influenza pandemic at that time
+    
+    -   also 1929, because 1930 was not available.
 
     -   also 1939, because nuance of the available 1940 data prevented mapping to our standardized condition lists
 
