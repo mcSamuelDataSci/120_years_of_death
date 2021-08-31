@@ -154,6 +154,7 @@ y1900 <- read_excel("Century of death DATA.xlsx",sheet="y1900") %>% mutate(year=
 y1910 <- read_excel("Century of death DATA.xlsx",sheet="y1910") %>% mutate(year=1910)
 y1917 <- read_excel("Century of death DATA.xlsx",sheet="y1917") %>% mutate(year=1917)
 y1918 <- read_excel("Century of death DATA.xlsx",sheet="y1918") %>% mutate(year=1918)
+y1919 <- read_excel("Century of death DATA.xlsx",sheet="y1919") %>% mutate(year=1919)
 y1920 <- read_excel("Century of death DATA.xlsx",sheet="y1920") %>% mutate(year=1920)
 y1929 <- read_excel("Century of death DATA.xlsx",sheet="y1929") %>% mutate(year=1929)
 y1939 <- read_excel("Century of death DATA.xlsx",sheet="y1939") %>% mutate(year=1939)
@@ -171,7 +172,7 @@ y2020 <- read_excel("Century of death DATA.xlsx",sheet="y2020") %>% mutate(year=
 
 
 
-workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1920, y1929, y1939, y1940, y1950, y1960, y1970, y1980, y1990, y2000, y2010, y2018, y2019, y2020)
+workDat0 <- bind_rows(y1900, y1910, y1917, y1918, y1919, y1920, y1929, y1939, y1940, y1950, y1960, y1970, y1980, y1990, y2000, y2010, y2018, y2019, y2020)
 
 
 
@@ -201,7 +202,9 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 -   Overall death rates and the leading causes of death have changed greatly over the past 100 years. In general, death rates have decreased and leading causes of death have shifted from infectious to chronic.
 -   In the big picture these changes are due to improvements in sanitation and hygiene, clean air and water, availability of good food, vaccines, antibiotics, other medicine and advances in health care, and a range of highly effective public health efforts.
 -   While the overall improvements and changes in causes of death are well known, collecting, collating and displaying these data carefully and in detail can provide further actionable insights for public health professionals to make informed decisions.
--   Towards this end, a range of paper (scanned into pdf), machine readable query-based data, and our own data systems were reviewed, standardized, synthesized, and ultimately visualized as presented below. <br>
+-   Towards this end, a range of paper (scanned into pdf), machine readable query-based data, and our own data systems were reviewed, standardized, synthesized, and ultimately visualized as presented below. 
+
+<br>
 
 # Methods:
 
@@ -225,17 +228,25 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 
 -   This "Display Level" was then grouped further into a "Top Level" for the broadest view of causes of death, and for consistency with other national and international systems.
 
--   [add info on population data sources and crude rate calculation here]
+-   Population data for decennial years (i.e., years ending in "0") was extracted directly from the U.S. Census Bureau, whereas population data for non-decennial years was found through a variety of sources, including the NCHS and the U.S. Census Bureau. Crude death rates were calculated with the following formula: Crude death rate per 100,000 = (total # of deaths/total population)*100,000.
 
--   All data processing, analysis, visualization, and production of this document were conducted using the R language and environment for statistical computing <br>
+-   All data processing, analysis, visualization, and production of this document were conducted using the R language and environment for statistical computing 
+
+<br>
 
 # Selected Findings:
 
--   Since 1900, overall causes of California mortality have shifted from communicable diseases to chronic diseases. More specifically, communicable diseases sharply decreased until around the 1980's when HIV and drug-resistant strains emerged (see figure 5).
--   A significant decrease in death rates has occured (death rate in 1900 was 1,516 deaths per 100,000 individuals, whereas death rate for 2020 was 801 deaths per 100,000 persons). This decrease in death rates can be somewhat attributed to advances in medical care, but perhaps even more important are the strides made through the work of public health professionals.
+-   Crude death rates have decreased substantially over the past 120 years,  from 1,516 deaths per 100,000 population in 1900 to 801 deaths per 100,000 persons in 2010.  [Furthermore, since the age distribution of the population has shifted markedly to older ages over this period, the decrease in the age-adjusted mortality rate, a better overall measure of a population’s health, is proportionally much larger than the decrease in the crude rates--but age-adjusted rates cannot be calculated with the data from this project.] 
 -   The crude death rate plots --- particularly the line plots --- should be interpreted carefully, as although the crude rate line plot shows that death rates for communicable disease have significantly decreased since the 1900's, a line plot of the number of deaths since 1900 reveals that though mortality from communicable disease trended downward during the early-mid 20th century, the HIV pandemic (around the 1980's) caused a surge in communicable disease mortality, as did the COVID-19 pandemic.
--   In 1900, the leading cause of death was Tuberculosis, followed by other communicable diseases (primarily communicable respiratory diseases). This is in contrast to the leading causes of death on 2020, where the leading causes of death were mostly chronic diseases (Ischemic heart disease and Alzheimer's disease), though it should be noted that COVID-19, a communicable disease, was one of the leading causes of death in 2020 (this is a departure from prior years where the leading causes of death were mainly chronic in nature).
--   The COVID-19 pandemic, similar to the HIV pandemic, shows that communicable diseases are here to stay and can cause immense death, morbidity, and economic damage.
+-  Since 1900,  causes of California mortality have shifted from communicable diseases to chronic diseases.  In 1990, the largest proportion of deaths, 8.08%, was due to communicable disease.  By 2019 this proportion had decreased to 2.66% of deaths, with 83.34% due to chronic conditions (including cancer and cardiovascular disease).
+-   In 1900, the leading cause of death was Tuberculosis, followed by other communicable diseases (primarily communicable respiratory diseases). In contrast, Tuberculosis caused almost no deaths in 2019, and the leading causes, heart disease, Alzheimer’s disease and cancer are all chronic.
+
+<br>
+
+# Discussion:
+
+-   This decrease in death rates can be somewhat attributed to advances in medical care, but perhaps even more important are the strides made through the work of public health professionals.
+-   The emergence of COVID-19, a communicable disease, and one of the leading causes of death in 2020, clearly indicates that these patterns can and do change. 
 
 <br>
 
@@ -243,7 +254,7 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 
 # SUMMARY VIEWS
 
-## Figure 1. - Trend in death rates by "topLevel" conditions, by decade and additional pandemic years.
+## Figure 1. - Trend in death rates by Top Level conditions, by decade and additional pandemic years.
 
 ```{r fig.height= 8, fig.width= 15}
 
@@ -265,24 +276,6 @@ workGroupExplore  <- workDat0 %>%
                       summarise(deaths=sum(Number)) %>%
                       pivot_wider(names_from = year, values_from = deaths)
 
-# Old
-
-# ggplot(workGroup1a, aes(x=year, y=cDeathRate, fill = topLevel)) +
-#   theme(axis.text.x = element_text(size=20, hjust=0.5), axis.text.y = element_text(size=20), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
-#   theme(legend.key.size = unit(1, 'cm'), 
-#         legend.key.height = unit(1, 'cm'), 
-#         legend.key.width = unit(1, 'cm'), 
-#         legend.title = element_text(size=17), 
-#         legend.text = element_text(size=13)) +
-#   geom_col(width = 0.9) +
-#   #coord_flip() +
-#   labs(title = "1) Crude Death Rates (topLevel)",
-#        caption = "Figure 1. ",
-#        y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
-#   theme(plot.title = element_text(hjust = 0.5, size=30),
-#         plot.caption = element_text(hjust = 0, size=20, face = "italic"))
-
-# New
 
 workGroup1a_plot_df <- workGroup1a %>%
   group_by(year, topLevel) %>%
@@ -316,7 +309,7 @@ ggplot(workGroup1a_plot_df, aes(x=year, y=cDeathRate, fill = topLevel, width = b
 
 <hr>
 
-## Figure 2. - Trends in both number of deaths (2A) and crude death rates (2B) by "topLevel" conditions, 1900-2020 (excluding 1940), California
+## Figure 2. - Trends in both number of deaths (2A) and crude death rates (2B) by Top Level conditions, 1900-2020 (excluding 1940), California
 
 ```{r fig.height= 7, fig.width= 12}
 
@@ -396,7 +389,7 @@ cowplot::plot_grid(trendPlots_Ndeaths_cRates, legend, nrow = 1, rel_widths = c(3
 
 <hr>
 
-## Figure 3. - Trend in death rates by "displayLevel" conditions, by decade and additional pandemic years.
+## Figure 3. - Trend in death rates by Display Level conditions, by decade and additional pandemic years.
 
 ```{r fig.height= 8, fig.width= 15}
 
@@ -435,13 +428,13 @@ ggplot(workGroup1b_plot_df, aes(x=year, y=cDeathRate, fill = displayLevel, width
 
 <hr>
 
-## Figure 4. - Change in specificLevel mortality between 1900 and 2020 grouped by topLevel. Each year has an x-axis of varying magnitude, depending on the number of deaths in that year.
+## Figure 4. - Change in Display Level mortality between 1900 and 2020 grouped by Display Level.
 
 ```{r fig.height= 8, fig.width= 15}
 
 # Number of Deaths Plot (specificLevel) - INCLUDE THIS CHART
 
-ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
+ggplot(workGroup1a, aes(x=fct_rev(displayLevel), y=deaths, fill = topLevel)) +
   theme(axis.text.x = element_text(size=10, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
   theme(legend.key.size = unit(1, 'cm'), 
         legend.key.height = unit(1, 'cm'), 
@@ -459,7 +452,7 @@ ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
 
 <hr>
 
-## Figure 5. - Crude death rates by decade and additional pandemic years (displayLevel)
+## Figure 5. - Crude death rates at the Display Level, by decade and additional pandemic years
   
 ```{r fig.height= 8, fig.width= 15}
 
@@ -483,7 +476,31 @@ ggplot(workGroup1a, aes(x=fct_rev(displayLevel), y=cDeathRate, fill = topLevel))
 
 <hr>
 
-## Figure 6. - Crude Death Rates (specificLevel)
+## Figure 6. - Change in Specific Level mortality between 1900 and 2020 grouped by Top Level.
+
+```{r fig.height= 8, fig.width= 15}
+
+# Number of Deaths Plot (specificLevel) - INCLUDE THIS CHART
+
+ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
+  theme(axis.text.x = element_text(size=10, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
+  geom_col() +
+  coord_flip() +
+  labs(y = "Number of Deaths", x = "Cause of Death") +
+  facet_wrap(vars(year),nrow=1,scales = "free_x")
+
+```
+
+<br>
+
+<hr>
+
+## Figure 7. - Crude death rates at the Specific Level, by decade and additional pandemic years
 
 ```{r fig.height= 8, fig.width= 15}
 
@@ -502,91 +519,6 @@ ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=cDeathRate, fill = topLevel)
   facet_wrap(vars(year),nrow=1)
 
 ```
-
-<br>
-
-<hr>
-
-## Figure 7. - Number of Deaths as Sorted by specificLevel
-
-```{r fig.height= 8, fig.width= 12}
-
-workGroup1c <- workDat1 %>% 
-               group_by(year, topLevel, troubleshooting, specificLevel)     %>% 
-               summarise(deaths=sum(Number)) %>%
-  left_join(select(popDat, year, population), by = "year") %>%
-  mutate(cDeathRate = 100000*deaths/population)
-
-#CCB vs. CDC Specific Level (Graph)
-
-ggplot(workGroup1c, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
-  theme(axis.text.x = element_text(size=13, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
-  theme(legend.key.size = unit(1, 'cm'), 
-        legend.key.height = unit(1, 'cm'), 
-        legend.key.width = unit(1, 'cm'), 
-        legend.title = element_text(size=17), 
-        legend.text = element_text(size=13)) +
-  geom_col() +
-  coord_flip() +
-  labs(y = "Number of Deaths", x = "Cause of Death") +
-  facet_wrap(vars(year),nrow=1)
-
-#CCB vs. CDC Specific Level (Table)
-
-# library(formattable)
-# 
-# customGreen0 = "#DeF7E9"
-# customGreen = "#71CA97"
-# 
-# workGroup1d <- workDat1  %>%
-#                group_by(year, specificLevel)     %>% 
-#                summarise(deaths=sum(Number)) %>%
-#   left_join(select(popDat, year, population), by = "year") %>%
-#   mutate(cDeathRate = 100000*deaths/population) %>%
-#   select(-population, -cDeathRate) %>%
-#                pivot_wider(names_from = year, values_from = deaths)
-# 
-# names(workGroup1d) <- c("specificLevel", "CDC2000", "CCB2000", "CDC2010", "CCB2010", "CDC2018", "CCB2018")
-# 
-# workGroup1d <- workGroup1d %>% mutate(DIF2000 = CDC2000-CCB2000)
-# workGroup1d <- workGroup1d %>% mutate(DIF2010 = CDC2010-CCB2010)
-# workGroup1d <- workGroup1d %>% mutate(DIF2018 = CDC2018-CCB2018)
-# 
-# formattable(workGroup1d,
-#             align =c("l","c","c","c","c", "c", "c"),
-#             list(`specificLevel` = formatter("span", style = ~ style(font.weight = "bold")),
-#                  'DIF2000'= color_tile(customGreen, customGreen0),
-#                  'DIF2010'= color_tile(customGreen, customGreen0),
-#                  'DIF2018'= color_tile(customGreen, customGreen0)
-# ))
-
-```
-
-<br>
-
-<hr>
-
-```{r}
-
-#yNformat <- fmt_number(columns = 5:19, use_seps = TRUE, decimals = 0) 
-
-workGroup1b %>% gt()  %>%
-  tab_options(table.font.size = 9) %>%
-  tab_style(
-    style = list(cell_fill(color = "lightcyan"),
-                 cell_text(weight = "bold")  ),
-    locations =  cells_row_groups()    ) %>%
-    fmt_number(columns = 5:19, use_seps = TRUE, decimals = 0) %>%
-  summary_rows(columns= 5:19, fns = list(sum = ~sum(.,na.rm = TRUE)), formatter = fmt_number)
-  
-
-
-# https://stackoverflow.com/questions/66018397/how-to-specify-a-custom-formatter-function-gt-table-grand-summary
-
-
-
-```
-
 ```{r}
 #library(gitcreds)
 #gitcreds_set()
