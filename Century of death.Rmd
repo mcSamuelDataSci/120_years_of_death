@@ -23,7 +23,6 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, f
 ## Make a set of bullets (or prose; whatever you prefer) that succinctly and clearly describes the process of collecting and extracting the data, mapping the "raw" disease names to the specific level, specific level to display level, and display level to top level--for interest, give a couple of example of "colorful/odd" "raw" conditions names from back in the day.
 ## explore how what is currently the third chart can be even more "legible" with wider bars (?), different colors, and/or other things you can think of--this is a key chart.
 ## Add to the bottom of the markdown the 1-3 key references of work most related to this project.
-## Align trend line plots side-to-side.
 ## Sort out Kidney disease in Other communicable
 
 # Completed Items:
@@ -32,6 +31,8 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, f
 ## Verify that 2019 and 2020 sorting are identical. -COMPLETED-
 ## Add 2019 population data. -COMPLETED-
 ## Add 1980. -COMPLETED-
+## Align trend line plots side-to-side. -COMPLETED-
+
 ## Jaspreet - Flextable
 
 
@@ -226,7 +227,7 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 
 -   The systems for classifying deaths have evolved greatly over the years, from ad hoc systems, to "ICD-1" in the 1910's, ICD-8 in the 1960's, etc., to ICD-10 currently.
 
--   Therefore, we reviewed all the listed causes for each year, identified causes that occurred frequently in any one year, and developed a "common denominator" list of causes that, as much as possible, provided a single detailed list of specific cases to which all main causes of death from all years could be mapped.We then mapped/grouped this "Specific Level" grouping (with XX levels) into a "Display Level" grouping with just 17 categories for increased comprehensibility and for visual display.
+-   Therefore, we reviewed all the listed causes for each year, identified causes that occurred frequently in any one year, and developed a "common denominator" list of causes that, as much as possible, provided a single detailed list of specific cases to which all main causes of death from all years could be mapped.We then mapped/grouped this "Specific Level" grouping into a "Display Level" grouping with just 17 categories for increased comprehensibility and for visual display.
 
 -   This "Display Level" was then grouped further into a "Top Level" for the broadest view of causes of death, and for consistency with other national and international systems.
 
@@ -238,7 +239,7 @@ workDat1 <- bind_rows(y2000, y2000ccb, y2010, y2010ccb, y2018, y2018ccb)
 
 # Selected Findings:
 
--   Crude death rates have decreased substantially over the past 120 years,  from 1,516 deaths per 100,000 population in 1900 to 801 deaths per 100,000 persons in 2010.  [Furthermore, since the age distribution of the population has shifted markedly to older ages over this period, the decrease in the age-adjusted mortality rate, a better overall measure of a population’s health, is proportionally much larger than the decrease in the crude rates--but age-adjusted rates cannot be calculated with the data from this project.] 
+-   Crude death rates have decreased substantially over the past 120 years, from 1,516 deaths per 100,000 population in 1900 to 801 deaths per 100,000 persons in 2010.  [Furthermore, since the age distribution of the population has shifted markedly to older ages over this period, the decrease in the age-adjusted mortality rate, a better overall measure of a population’s health, is proportionally much larger than the decrease in the crude rates--but age-adjusted rates cannot be calculated with the data from this project.] 
 -   The crude death rate plots --- particularly the line plots --- should be interpreted carefully, as although the crude rate line plot shows that death rates for communicable disease have significantly decreased since the 1900's, a line plot of the number of deaths since 1900 reveals that though mortality from communicable disease trended downward during the early-mid 20th century, the HIV pandemic (around the 1980's) caused a surge in communicable disease mortality, as did the COVID-19 pandemic.
 -  Since 1900,  causes of California mortality have shifted from communicable diseases to chronic diseases.  In 1990, the largest proportion of deaths, 8.08%, was due to communicable disease.  By 2019 this proportion had decreased to 2.66% of deaths, with 83.34% due to chronic conditions (including cancer and cardiovascular disease).
 -   In 1900, the leading cause of death was Tuberculosis, followed by other communicable diseases (primarily communicable respiratory diseases). In contrast, Tuberculosis caused almost no deaths in 2019, and the leading causes, heart disease, Alzheimer’s disease and cancer are all chronic.
@@ -521,6 +522,18 @@ ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=cDeathRate, fill = topLevel)
   facet_wrap(vars(year),nrow=1)
 
 ```
+
+<br>
+
+<hr>
+
+# Key References
+
+## Centers for Disease Control and Prevention. (2015, November 6). Products - vital statistics of the US - homepage. https://www.cdc.gov/nchs/products/vsus.htm. 
+
+## Centers for Disease Control and Prevention. CDC WONDER. https://wonder.cdc.gov/. 
+
+## United States Census Bureau. Explore Census Data. https://data.census.gov/cedsci/. 
 ```{r}
 #library(gitcreds)
 #gitcreds_set()
