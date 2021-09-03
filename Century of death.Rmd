@@ -35,9 +35,11 @@ knitr::opts_chunk$set(echo = FALSE,warning=FALSE, message=FALSE, fig.width=11, f
 
 ## Jaspreet - Flextable
 
-# NOTABLE YEARS:
+# NOTES:
 
-## 1987 - This was the year AZT, the first drug for treating AIDS, gained FDA approval.
+## Pregnancy/Perinatal conditions that have the top level classification of "Injury" are those that involve injuries at birth and lack of care.
+## Some COPD specific level items include unspecified bronchitis in addition to chronic bronchitis.
+## The COPD specific level classification includes (in addition to COPD) chronic bronchitis, unspecified bronchitis, and pulmonary emphysema.
 
 ```
 
@@ -502,6 +504,68 @@ ggplot(workGroup1a, aes(x=fct_rev(specificLevel), y=cDeathRate, fill = topLevel)
   labs(y = "Crude Death Rate per 100k Pop", x = "Cause of Death") +
   facet_wrap(vars(year),nrow=1)
 
+```
+
+<br>
+
+<hr>
+
+# REFERENCE/ANALYSIS CHARTS
+
+<br>
+
+```{r fig.height= 8, fig.width= 12}
+workGroup1c <- workDat1 %>% 
+               group_by(year, topLevel, troubleshooting, specificLevel)     %>% 
+               summarise(deaths=sum(Number)) %>%
+  left_join(select(popDat, year, population), by = "year") %>%
+  mutate(cDeathRate = 100000*deaths/population)
+#CCB vs. CDC Specific Level (Graph)
+ggplot(workGroup1c, aes(x=fct_rev(specificLevel), y=deaths, fill = topLevel)) +
+  theme(axis.text.x = element_text(size=13, angle=90, hjust=0.5), axis.text.y = element_text(size=13), axis.title.x = element_text(size=22), axis.title.y = element_text(size=22)) +
+  theme(legend.key.size = unit(1, 'cm'), 
+        legend.key.height = unit(1, 'cm'), 
+        legend.key.width = unit(1, 'cm'), 
+        legend.title = element_text(size=17), 
+        legend.text = element_text(size=13)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Number of Deaths as Sorted by specificLevel",
+       y = "Number of Deaths", x = "Cause of Death") +
+  facet_wrap(vars(year),nrow=1) +
+theme(plot.title = element_text(hjust = 0.5, size=25))
+
+```
+
+<hr>
+  
+<br>
+
+```{r fig.height= 8, fig.width= 12}
+
+#CCB vs. CDC Specific Level (Table)
+
+library(formattable)
+customGreen0 = "#DeF7E9"
+customGreen = "#71CA97"
+workGroup1d <- workDat1  %>%
+               group_by(year, specificLevel)     %>% 
+               summarise(deaths=sum(Number)) %>%
+  left_join(select(popDat, year, population), by = "year") %>%
+  mutate(cDeathRate = 100000*deaths/population) %>%
+  select(-population, -cDeathRate) %>%
+               pivot_wider(names_from = year, values_from = deaths)
+names(workGroup1d) <- c("specificLevel", "CDC2000", "CCB2000", "CDC2010", "CCB2010", "CDC2018", "CCB2018")
+workGroup1d <- workGroup1d %>% mutate(DIF2000 = CDC2000-CCB2000)
+workGroup1d <- workGroup1d %>% mutate(DIF2010 = CDC2010-CCB2010)
+workGroup1d <- workGroup1d %>% mutate(DIF2018 = CDC2018-CCB2018)
+formattable(workGroup1d,
+            align =c("l","c","c","c","c", "c", "c"),
+            list(`specificLevel` = formatter("span", style = ~ style(font.weight = "bold")),
+                 'DIF2000'= color_tile(customGreen, customGreen0),
+                 'DIF2010'= color_tile(customGreen, customGreen0),
+                 'DIF2018'= color_tile(customGreen, customGreen0)
+))
 ```
 
 <br>
